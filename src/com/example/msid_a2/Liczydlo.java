@@ -3,10 +3,14 @@ package com.example.msid_a2;
 import java.util.ArrayList;
 import java.util.List;
 
+import Jama.Matrix;
+
+
 public class Liczydlo {
 	
 
 	float iMin,iMax,jMin,jMax = Integer.MIN_VALUE;
+
 	
 	
 	 public List<Point> getHi(float a, float b, List<Point> points){
@@ -95,5 +99,12 @@ public class Liczydlo {
     	  double result = (getiMax(hJ) - getiMin(hJ))/(iMax - iMin);
     	  return result;
       }
+      
+      public double modelStat(Litera l, double D){
+    	  l.liczOdchylenie();
+    	  double wynik = (1/(Math.pow((2*Math.PI),D/2.0)*)*Math.exp(-(1/2)*()))
+      }
+      
+
 
 }
