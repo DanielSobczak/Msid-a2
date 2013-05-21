@@ -88,5 +88,12 @@ public class Liczydlo {
     	  double result = (getjMax(hI) - getjMin(hI))/(jMax - jMin);
     	  return result;
       }
+      
+      public double cechaQ2(List<Point> points){
+    	  List<Point> hJ = getHi(0.4f, 0.6f,points);
+    	  if(iMin<0 || iMax<0 || iMin<0 || jMax<0) policzIJ(points);
+    	  double result = (getiMax(hJ) - getiMin(hJ))/(iMax - iMin);
+    	  return result;
+      }
 
 }
