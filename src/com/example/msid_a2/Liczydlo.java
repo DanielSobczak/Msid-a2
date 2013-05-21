@@ -3,7 +3,6 @@ package com.example.msid_a2;
 import java.util.ArrayList;
 import java.util.List;
 
-import Jama.Matrix;
 
 
 public class Liczydlo {
@@ -102,7 +101,7 @@ public class Liczydlo {
       
       public double modelStat(Litera l, double D){
     	  l.liczOdchylenie();
-    	  double wynik = (1/(Math.pow((2*Math.PI),D/2.0)*)*Math.exp(-(1/2)*()))
+    	  double wynik = (1/(Math.pow((2*Math.PI),D/2.0)*)*Math.exp(-(1/2)*()));
       }
       
 
