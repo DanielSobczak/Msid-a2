@@ -26,6 +26,19 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+/**
+ * Ogolny zarys programu.
+ * 
+ * 1.Wyliczenie estymatorow dla kazdej z liter na podstawie podanego ciagu "do nauki" . 
+ * 2.Przy rozpoznawaniu litery zostaje wyliczona wartosc prawdopodobienstwa p(phi/yk=1) modelu statystycznego dla każdej z liter.
+ *   Wykorzystane sa tutaj estymatory wyliczone wczesniej
+ * 3.Za pomoca twierdzenia Bayes'a wyliczamy dla kazdej litery prawdopodobienstwo p(y/phi) 
+ * i podejmujemy decyzje tj. bierzemy najwieksze.
+ * 
+ * @author Adam
+ *
+ */
 public class MainActivity extends Activity {
 
 	private DrawView drawView;

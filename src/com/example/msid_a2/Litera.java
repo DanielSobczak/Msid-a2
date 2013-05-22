@@ -37,10 +37,14 @@ public class Litera {
 		przykladyDoNauki = cecha;
 		liczSrednia();
 		liczMacierzKowariancji(srednia);
-		
-	}
-	
 
+	}
+
+	/**
+	 * Dodanie cechy do listy cech
+	 * @param cecha
+	 * @param N
+	 */
 	public void add(WektorCech2 cecha, double N){
 		przykladyDoNauki.add(cecha);
 		doucz(cecha.getMatrix(),N);
@@ -66,6 +70,13 @@ public class Litera {
 		return result;
 	}
 
+
+	/**
+	 * Metoda oblicza macierz kowariancji (Sigma k)
+	 * @param u - Estymator u ("mi" - srednia)
+	 * @return suma - Macierz kowariancji
+	 * @throws IllegalDimensionException
+	 */
 	public Matrix liczMacierzKowariancji(Matrix u) throws IllegalDimensionException{
 		Matrix suma = new Matrix(u.getNrows(), u.getNrows());
 		Log.d("l","Litera: "+name+ " liczMacierzKowa() przykladyDoNauki: "+przykladyDoNauki);
@@ -98,7 +109,7 @@ public class Litera {
 
 	/**
 	 * 
-	 * @param D - liczba wymiarów
+	 * @param D - liczba wymiarï¿½w
 	 * @param cechy - macierz wyliczonych cech zczytanych z obrazka
 	 * @return model statystyczny dla danej litery
 	 * @throws IllegalDimensionException
@@ -124,6 +135,11 @@ public class Litera {
 	}
 
 
+	/**
+	 * Metoda pozwala na dodanie cechy do listy chech litery i zaaktualizowanie procesu nauczania
+	 * @param cecha
+	 * @param N
+	 */
 	public void doucz(Matrix cecha, double N) {
 		try {
 			if(srednia==null || macierzKowariancji == null) {
@@ -131,9 +147,9 @@ public class Litera {
 				liczMacierzKowariancji(srednia);
 				douczTheta(N);
 			} else {
-			douczSrednia(cecha);
-			douczTheta(N);
-			liczMacierzKowariancji(srednia);
+				douczSrednia(cecha);
+				douczTheta(N);
+				liczMacierzKowariancji(srednia);
 			}
 		} catch (IllegalDimensionException e) {
 			// TODO Auto-generated catch block

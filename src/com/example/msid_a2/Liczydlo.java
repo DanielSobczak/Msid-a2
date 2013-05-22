@@ -18,6 +18,12 @@ public class Liczydlo {
 	public Liczydlo(){
 	}
 
+	/**
+	 * @param a - Alpha ze wzoru na Hi
+	 * @param b - Beta ze wzoru na Hi
+	 * @param points - Zbior punktow nalezacych do przedzialu
+	 * @return
+	 */
 	public List<Point> getHi(float a, float b, List<Point> points){
 		// if(iMin<0 || iMax<0 || iMin<0 || jMax<0) policzIJ(points);
 		ArrayList<Point> result = new ArrayList<Point>();
@@ -29,6 +35,12 @@ public class Liczydlo {
 		return result;
 	}
 
+	/**
+	 * @param a - Alpha ze wzoru na Hj
+	 * @param b - Beta ze wzoru na Hj
+	 * @param points - Zbior punktow nalezacych do przedzialu
+	 * @return
+	 */
 	public List<Point> getHj(float a, float b, List<Point> points){
 		// if(iMin<0 || iMax<0 || jMin<0 || jMax<0) policzIJ(points);
 		ArrayList<Point> result = new ArrayList<Point>();
@@ -40,6 +52,11 @@ public class Liczydlo {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param points Narysowane punkty
+	 * @returnn minialny x z narysowanych pktow
+	 */
 	public float getiMin(List<Point> points) {
 		float imin = Integer.MAX_VALUE;  
 		for(Point p : points) {
@@ -49,6 +66,12 @@ public class Liczydlo {
 
 		return imin;            
 	}
+	
+	/**
+	 * 
+	 * @param points Narysowane punkty
+	 * @returnn max x z narysowanych pktow
+	 */
 
 	public float getiMax(List<Point> points) {
 
@@ -62,6 +85,12 @@ public class Liczydlo {
 		return imax;
 
 	}
+	
+	/**
+	 * 
+	 * @param points Narysowane punkty
+	 * @returnn max y z narysowanych pktow
+	 */
 
 	public float getjMax(List<Point> points) {
 
@@ -73,6 +102,12 @@ public class Liczydlo {
 
 		return jmax;   
 	}
+	
+	/**
+	 * 
+	 * @param points Narysowane punkty
+	 * @returnn min y z narysowanych pktow
+	 */
 
 	public float getjMin(List<Point> points) {
 
@@ -85,6 +120,11 @@ public class Liczydlo {
 
 		return jmin;            
 	}
+	
+	/**
+	 * Liczy maxI,minI,maxJ,minJ
+	 * @param points
+	 */
 
 	public void policzIJ(List<Point> points){
 		iMin = getiMin(points);
@@ -93,6 +133,12 @@ public class Liczydlo {
 		jMax = getjMax(points);
 		Log.d("kupa",String.format("imin %s   jMin %s   iMax %s  jMax %s", iMin, jMin, iMax, jMax));
 	}
+	
+	/**
+	 * 
+	 * @param points - Punkty, ktore tworza litere
+	 * @return result - Cecha1, opisana w tresci zadania
+	 */
 
 	public double cechaQ1(List<Point> points){
 		policzIJ(points);
@@ -101,6 +147,12 @@ public class Liczydlo {
 		return result;
 	}
 
+	
+/**
+ * 
+ * @param points - Punkty, ktore tworza litere
+ * @return result - Cecha2 opisana w tresci zadania
+ */
 	public double cechaQ2(List<Point> points){
 		policzIJ(points);
 		List<Point> hJ = getHj(0.4f, 0.6f,points);
