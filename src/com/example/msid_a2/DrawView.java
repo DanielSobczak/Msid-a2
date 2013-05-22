@@ -62,7 +62,7 @@ public class DrawView extends View implements OnTouchListener {
 			point.y = event.getY();
 			points.add(point);
 			invalidate();
-			Log.d(TAG, "point: " + point);
+			//Log.d(TAG, "point: " + point);
 			return true;
 		case MotionEvent.ACTION_UP:
 			Point.ids++;
@@ -73,6 +73,9 @@ public class DrawView extends View implements OnTouchListener {
 		}
 
 	}
+	
+	
+
 
 
 }

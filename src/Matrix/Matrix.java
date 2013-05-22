@@ -1,5 +1,7 @@
 package Matrix;
 
+import java.util.Arrays;
+
 
 public class Matrix {
 
@@ -27,6 +29,19 @@ public class Matrix {
 		this.nrows = nrow;
 		this.ncols = ncol;
 		data = new double[nrow][ncol];
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n");
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[0].length; j++) {
+				sb.append(data[i][j]+" ");
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 
 	public int getNrows() {

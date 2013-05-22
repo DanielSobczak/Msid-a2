@@ -34,6 +34,16 @@ public class MatrixMathematics {
 		return (transpose(cofactor(matrix)).multiplyByConstant(1.0/determinant(matrix)));
 	}
 	
+	public static Matrix inverse2(Matrix matrix) throws NoSquareException {
+
+		double[][] kupa = matrix.getValues();
+			double[][] kupa2Inverse = {{kupa[1][1],-1*kupa[0][1]},{-1*kupa[1][0],kupa[0][0]}};
+			double suka = 1/((kupa[0][0]*kupa[1][1]) - (kupa[0][1]* kupa[1][0]));
+			Matrix wynik = new Matrix(kupa2Inverse);
+			
+		return wynik.multiplyByConstant(suka);
+	}
+	
 	/**
 	 * Determinant of a square matrix
 	 * The following function find the determinant in a recursively. 

@@ -3,6 +3,8 @@ package com.example.msid_a2;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 import Matrix.IllegalDimensionException;
 import Matrix.Matrix;
 import Matrix.MatrixMathematics;
@@ -12,7 +14,7 @@ import Matrix.NoSquareException;
 public class Litera {
 	Matrix srednia;
 	Matrix macierzKowariancji;
-	double theta;
+	private double theta;
 	double prawdopodobienstwo;
 	char name;
 
@@ -30,12 +32,14 @@ public class Litera {
 	 * @do uruchamia liczSrednia() oraz liczMacierzKowariancji()
 	 * @throws IllegalDimensionException
 	 */
-	public Litera(List<WektorCech2> cecha) throws IllegalDimensionException{
+	public Litera(List<WektorCech2> cecha,char name) throws IllegalDimensionException{
+		this.name = name;
 		przykladyDoNauki = cecha;
-		theta = Integer.MIN_VALUE;
 		liczSrednia();
 		liczMacierzKowariancji(srednia);
+		
 	}
+	
 
 	public void add(WektorCech2 cecha, double N){
 		przykladyDoNauki.add(cecha);
@@ -57,12 +61,15 @@ public class Litera {
 			suma=MatrixMathematics.add(w.getMatrix(), suma);
 		}
 		Matrix result = suma.multiplyByConstant(1.0/przykladyDoNauki.size());
+		Log.d("l","Litera: "+name+ " liczSrednia() result: "+result);
 		srednia = result;
 		return result;
 	}
 
 	public Matrix liczMacierzKowariancji(Matrix u) throws IllegalDimensionException{
 		Matrix suma = new Matrix(u.getNrows(), u.getNrows());
+		Log.d("l","Litera: "+name+ " liczMacierzKowa() przykladyDoNauki: "+przykladyDoNauki);
+		Log.d("l","Litera: "+name+ " liczMacierzKowa() u: "+u);
 		for(WektorCech2 w:przykladyDoNauki){
 			Matrix m1 = MatrixMathematics.subtract(w.getMatrix(), u);
 			Matrix m2 = MatrixMathematics.transpose(m1);
@@ -70,6 +77,7 @@ public class Litera {
 			suma = MatrixMathematics.add(suma,iloczyn);
 		}
 		suma = suma.multiplyByConstant(1.0/przykladyDoNauki.size());
+		Log.d("l","Litera: "+name+ " liczMacierzKowa() kow: "+suma);
 		macierzKowariancji=suma;
 		return suma;
 	}
@@ -79,11 +87,12 @@ public class Litera {
 	 * @param iloscWystapien - liczba wystapien danej litery podczas nauki
 	 * @param calkowitaIlosc - liczba wszystich par w nauce (suma iloscWystapien z kazdych liter)
 	 */
-	public void setTheta(double iloscWystapien,double calkowitaIlosc){
-		theta = iloscWystapien/calkowitaIlosc;
+	public void setTheta(double calkowitaIlosc){
+		theta = size()/calkowitaIlosc;
 	}
 
 	public double getTheta(){
+		Log.d("k","Litera: "+name+ " theta: "+theta);
 		return theta;
 	}
 
@@ -100,11 +109,17 @@ public class Litera {
 		double[] wynik = new double[D];
 		//Liczenie wykladnika; m3=(phi-mi)  m2=Ek^-1 m1=m3^T ; T-transponowane
 		Matrix m3 = MatrixMathematics.subtract(cechy, this.liczSrednia());
-		Matrix m2 = MatrixMathematics.inverse(this.liczMacierzKowariancji(this.srednia));
+		Log.d("l","Litera: "+name+ " modelStat() m3: "+m3);
+		Matrix m2 = MatrixMathematics.inverse2(this.liczMacierzKowariancji(this.srednia));
+		Log.d("l","Litera: "+name+ " modelStat() m2: "+m2);
 		Matrix m1 = MatrixMathematics.transpose(m3);
-		double wyznacznik = MatrixMathematics.multiply(MatrixMathematics.multiply(m1, m2),m3).multiplyByConstant(-0.5).getValueAt(0, 0); // {-1/2 *m1*m2*m3}
+		Log.d("l","Litera: "+name+ " modelStat() m1: "+m1);
+		Matrix wyz = MatrixMathematics.multiply(MatrixMathematics.multiply(m1, m2),m3).multiplyByConstant(-0.5); // {-1/2 *m1*m2*m3}
+		double wyznacznik = wyz.getValueAt(0, 0);
+		Log.d("l","Litera: "+name+ " modelStat() wyznacznik: "+wyz);
 		//Policzenie modelu
 		double p = 1/(Math.pow(2*Math.PI,(double)D/2.0)*Math.sqrt(MatrixMathematics.determinant(this.macierzKowariancji))) * Math.exp(wyznacznik);
+		Log.d("l","Litera: "+name+ " modelStat() p: "+p);
 		return p;
 	}
 
@@ -130,11 +145,11 @@ public class Litera {
 
 
 	private void douczSrednia(Matrix cecha) throws IllegalDimensionException{
-		int size = size()<1?0:size()-1;
+		int size = size()<1?1:size()-1;
 
 		srednia = srednia.multiplyByConstant(size);
 		srednia = MatrixMathematics.add(srednia, cecha);
-		srednia = srednia.multiplyByConstant(size());
+		srednia = srednia.multiplyByConstant(1.0/size());
 
 	}
 

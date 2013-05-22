@@ -22,9 +22,10 @@ public class Liczydlo {
 		// if(iMin<0 || iMax<0 || iMin<0 || jMax<0) policzIJ(points);
 		ArrayList<Point> result = new ArrayList<Point>();
 		for(Point point : points){
-			if(point.x > ((1.0-a)*iMin+a*jMax) && point.x < (1-b)*iMin + b*iMax) 
+			if(point.x > ((1.0-a)*iMin+a*iMax) && point.x < (1-b)*iMin + b*iMax) 
 				result.add(point);
 		}
+		Log.d("H","xxxResult Hi.size: "+result.size());
 		return result;
 	}
 
@@ -32,9 +33,10 @@ public class Liczydlo {
 		// if(iMin<0 || iMax<0 || jMin<0 || jMax<0) policzIJ(points);
 		ArrayList<Point> result = new ArrayList<Point>();
 		for(Point point : points){
-			if(point.x >= ((1.0-a)*jMin+a*jMax) && point.x < (1-b)*jMin + b*jMax) 
+			if(point.y >= ((1.0-a)*jMin+a*jMax) && point.y < (1-b)*jMin + b*jMax) 
 				result.add(point);
 		}
+		Log.d("H","xxxResult Hj.size: "+result.size());
 		return result;
 	}
 
@@ -89,6 +91,7 @@ public class Liczydlo {
 		jMin = getjMin(points);
 		iMax = getiMax(points);
 		jMax = getjMax(points);
+		Log.d("kupa",String.format("imin %s   jMin %s   iMax %s  jMax %s", iMin, jMin, iMax, jMax));
 	}
 
 	public double cechaQ1(List<Point> points){

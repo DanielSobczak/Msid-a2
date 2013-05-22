@@ -35,4 +35,9 @@ public class WektorCech2 {
 	public Matrix getMatrix(){
 		return new Matrix(cecha);
 	}
+	
+	@Override
+	public String toString() {
+		return cecha[0][0]+" "+cecha[1][0];
+	}
 }
