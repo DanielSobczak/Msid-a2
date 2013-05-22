@@ -38,7 +38,7 @@ public class Liczydlo {
 	 }
 	
 	  public float getiMin(List<Point> points) {
-         float imin = Integer.MAX_VALUE;
+         float imin = Integer.MAX_VALUE; 
           for(Point p : points) {
               if(imin>p.x)
                   imin = p.x;
