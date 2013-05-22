@@ -107,6 +107,21 @@ public class Liczydlo {
 		double result = (getiMax(hJ) - getiMin(hJ))/(iMax - iMin);
 		return result;
 	}
+	
+	public double mCechaQ1(List<Point> points){
+		//stosunek wysokosci do szerokosci
+		policzIJ(points);
+		double result = (iMax - iMin)/(jMax - jMin);
+		return result;
+	}
+
+	public double mCechaQ2(List<Point> points){
+		//gestosc pikseli na calej szerokosci i w polowie wysokosci (miedzy 0.3f a 0.7f)
+		policzIJ(points);
+		List<Point> hJ = getHj(0.3f, 0.7f,points);
+		double result = hJ.size();
+		return result;
+	}
 
 
 
