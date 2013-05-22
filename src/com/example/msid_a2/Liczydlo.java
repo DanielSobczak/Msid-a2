@@ -3,7 +3,10 @@ package com.example.msid_a2;
 import java.util.ArrayList;
 import java.util.List;
 
+import Matrix.IllegalDimensionException;
 import Matrix.Matrix;
+import Matrix.MatrixMathematics;
+import Matrix.NoSquareException;
 
 
 
@@ -101,15 +104,16 @@ public class Liczydlo {
     	  return result;
       }
       
-      public double modelStat(Litera l, double D){
-    	  l.liczOdchylenie();
-    	  double wynik = (1/(Math.pow((2*Math.PI),D/2.0)*)*Math.exp(-(1/2)*()));
+      public double[] modelStat(Litera litera,int D,Matrix cechy) throws IllegalDimensionException, NoSquareException{
+    	 if(cechy.getNrows() != D) throw new ArrayIndexOutOfBoundsException(cechy.getNrows());
+    	 double[] wynik = new double[D];
+    	 //Liczenie wykladnika; m3=(phi-mi)  m2=Ek^-1 m1=m3^T ; T-transponowane
+    	 Matrix m3 = MatrixMathematics.subtract(cechy, litera.liczSrednia());
+    	 Matrix m2 = MatrixMathematics.inverse(litera.liczMacierzKowariancji(litera.srednia));
+    	 Matrix m1 = MatrixMathematics.transpose(m3);
+    	 double wyznacznik = MatrixMathematics.multiply(MatrixMathematics.multiply(m1, m2),m3).multiplyByConstant(-0.5).getValueAt(0, 0); // {-1/2 *m1*m2*m3}
+    	 double p = 1/(Math.pow(2*Math.PI,(double)D/2.0)*Math.sqrt(MatrixMathematics.determinant(litera.macierzKowariancji))) * Math.exp(wyznacznik);
+    	 return wynik;
       }
       
-      public Matrix epsilon(){
-    	  
-      }
-      
-
-
 }
