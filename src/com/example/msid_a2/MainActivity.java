@@ -1,5 +1,10 @@
 package com.example.msid_a2;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import Matrix.IllegalDimensionException;
+import Matrix.NoSquareException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,6 +21,11 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
     private DrawView drawView;
+	private Liczydlo liczydlo;
+	private Litera A;
+	private Litera B;
+	private Litera C;
+	  List<Litera> litery;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,18 @@ public class MainActivity extends Activity {
         drawView = new DrawView(this);
         setContentView(drawView);
         drawView.requestFocus();
+        liczydlo = new Liczydlo();
+        
+        //TODO Wczytywanie z pliku
+        
+        A = new Litera('A');
+        B = new Litera('B');
+        C = new Litera('C');
+        
+         litery = new ArrayList<Litera>();
+        litery.add(A);
+        litery.add(B);
+        litery.add(C);
     }
 
 	@Override
@@ -44,12 +66,24 @@ public class MainActivity extends Activity {
                   // do whatever
                   return true;
             case R.id.action_clear:
-                drawView = new DrawView(this);
-                setContentView(drawView);
-                drawView.requestFocus();
+                drawView.points.clear();
+                drawView.invalidate();
                 return true;
             case R.id.action_recognize:
-                // do whatever
+            	liczydlo.policzIJ(drawView.points);
+            	WektorCech2 wc =  new WektorCech2(liczydlo.cechaQ1(drawView.points), liczydlo.cechaQ2(drawView.points));//:D
+			Litera rozpoznanaLitera;
+			try {
+				rozpoznanaLitera = liczydlo.klasyfikacja(litery, 2, wc.getMatrix());
+				Toast.makeText(getApplicationContext(), "Rozpoznano: " + rozpoznanaLitera.name, Toast.LENGTH_LONG).show();
+			} catch (IllegalDimensionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSquareException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            	
                 return true;
             case R.id.action_learn:
                 AlertDialog.Builder ab = new AlertDialog.Builder(this);
@@ -65,6 +99,13 @@ public class MainActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						String c = et.getText().toString().trim();
 						Toast.makeText(getApplicationContext(), "Podano: "+c, Toast.LENGTH_SHORT).show();
+						Litera l = null;
+					    if(c.equals("A")) l = A;
+					    else if(c.equals("B")) l =B;
+					    else if(c.equals("C")) l =C;
+					    liczydlo.policzIJ(drawView.points);
+		            	WektorCech2 wc =  new WektorCech2(liczydlo.cechaQ1(drawView.points), liczydlo.cechaQ2(drawView.points));//:D
+					    l.add(wc, (double)(A.size()+B.size()+C.size()+1));
 						dialog.dismiss();
 					}
 				});

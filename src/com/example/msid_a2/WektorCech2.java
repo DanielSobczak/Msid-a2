@@ -9,7 +9,7 @@ public class WektorCech2 {
 	public WektorCech2(double Q1,double Q2){
 		cecha = new double[2][1];
 		cecha[0][0] = Q1;
-		cecha[0][1] = Q2;
+		cecha[1][0] = Q2;
 	}
 	
 	/**
